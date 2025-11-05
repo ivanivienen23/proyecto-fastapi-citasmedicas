@@ -180,7 +180,3 @@ Construye la imagen Docker de la aplicación (usando el Dockerfile).
 
 "Despliega" (publica) la imagen en el registro de contenedores
 del repositorio, etiquetada con el hash del commit.
-
---- 6. ENLACE AL REPOSITORIO DE GITHUB ---
-
-(Pega aquí el enlace HTTPS de tu repositorio de GitHub)

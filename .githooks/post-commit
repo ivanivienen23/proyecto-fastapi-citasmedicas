@@ -1,0 +1,16 @@
+#!/bin/sh
+
+Hook post-commit:
+
+Se ejecuta después de que un commit se ha creado exitosamente.
+
+Genera un log local.
+
+LOG_FILE="commit_history.log"
+AUTHOR=$(git config user.name)
+HASH=$(git rev-parse --short HEAD)
+DATE=$(date +"%Y-%m-%d %H:%M:%S")
+
+echo "[$DATE] Commit: $HASH | Autor: $AUTHOR" >> $LOG_FILE
+
+echo "Commit registrado en $LOG_FILE."

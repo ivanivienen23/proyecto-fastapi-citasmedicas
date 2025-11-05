@@ -1,0 +1,42 @@
+#!/bin/sh
+
+Hook pre-commit:
+
+Se ejecuta antes de crear un commit.
+
+Aborta el commit si black, flake8 o pytest fallan.
+
+echo "--- [PRE-COMMIT] Ejecutando formateo, linting y tests ---"
+
+1. Formatear código con Black
+
+(Lo ejecutamos directamente, no solo --check, para arreglarlo)
+
+echo "[1/3] Formateando con Black..."
+black app tests
+if [ $? -ne 0 ]; then
+echo "Error al formatear con Black. Revisa los cambios."
+# Añadimos los archivos que black pudo haber modificado
+git add app tests
+fi
+
+2. Linting con Flake8
+
+echo "[2/3] Linting con Flake8..."
+flake8 app tests --count --select=E9,F63,F7,F82 --show-source --statistics
+if [ $? -ne 0 ]; then
+echo "Flake8 encontró errores. Commit abortado."
+exit 1
+fi
+
+3. Ejecutar pruebas unitarias/integración
+
+echo "[3/3] Ejecutando Pytest..."
+pytest
+if [ $? -ne 0 ]; then
+echo "Pytest falló. Commit abortado."
+exit 1
+fi
+
+echo "--- [PRE-COMMIT] Todos los checks pasaron. Creando commit... ---"
+exit 0

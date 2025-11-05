@@ -1,0 +1,22 @@
+#!/bin/sh
+
+Hook pre-push:
+
+Se ejecuta antes de enviar los commits al repositorio remoto.
+
+Lanza de nuevo TODOS los tests y aborta si alguno falla.
+
+echo "--- [PRE-PUSH] Verificando todos los tests antes de subir... ---"
+
+pytest
+
+if [ $? -ne 0 ]; then
+echo ""
+echo "  ERROR: Los tests de Pytest fallaron."
+echo "  PUSH ABORTADO."
+echo ""
+exit 1 # Aborta el push
+fi
+
+echo "--- [PRE-PUSH] Tests superados. Realizando push... ---"
+exit 0

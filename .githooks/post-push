@@ -1,0 +1,14 @@
+#!/bin/sh
+
+Hook post-push:
+
+Se ejecuta después de un push exitoso.
+
+Muestra un mensaje de confirmación.
+
+echo ""
+echo "================================================="
+echo "  PUSH COMPLETADO"
+echo "  Disparando el pipeline de CI/CD en GitHub..."
+echo "================================================="
+echo ""

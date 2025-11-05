@@ -6,9 +6,7 @@ DATABASE_URL = "sqlite:///./citas.db"
 
 # connect_args={"check_same_thread": False} es necesario solo para SQLite
 # para permitir que sea usado en múltiples hilos (como lo hace FastAPI)
-engine = create_engine(
-    DATABASE_URL, connect_args={"check_same_thread": False}
-)
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
 # Metadata es un contenedor para las definiciones de las tablas
 metadata = MetaData()
@@ -23,11 +21,13 @@ citas = Table(
     Column("motivo", String, default="Consulta"),
 )
 
+
 def create_db_and_tables():
     """
     Crea todas las tablas definidas en la metadata.
     """
     metadata.create_all(bind=engine)
+
 
 def get_db() -> Connection:
     """
@@ -38,4 +38,4 @@ def get_db() -> Connection:
         try:
             yield conn
         finally:
-            conn.close() # Se cierra la conexión al finalizar la petición
+            conn.close()  # Se cierra la conexión al finalizar la petición

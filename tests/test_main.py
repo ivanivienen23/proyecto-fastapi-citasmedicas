@@ -20,6 +20,7 @@ engine = create_engine(
     poolclass=StaticPool,
 )
 
+
 # Creamos una función 'override' para la dependencia get_db
 def override_get_db():
     """
@@ -32,6 +33,7 @@ def override_get_db():
         finally:
             conn.close()
 
+
 # Aplicamos el 'override' a nuestra app de FastAPI
 app.dependency_overrides[get_db] = override_get_db
 
@@ -39,6 +41,7 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 # --- Fixture de Pytest ---
+
 
 @pytest.fixture(autouse=True)
 def setup_and_teardown_db():
@@ -53,7 +56,9 @@ def setup_and_teardown_db():
     # Borrar tablas
     metadata.drop_all(bind=engine)
 
+
 # --- Tests de Integración (Endpoints) ---
+
 
 def test_get_citas_vacia():
     """
@@ -64,6 +69,7 @@ def test_get_citas_vacia():
     assert response.status_code == 200
     assert response.json() == []
 
+
 def test_create_cita():
     """
     Test (Integración): Verifica que POST /api/citas crea una cita
@@ -72,17 +78,22 @@ def test_create_cita():
     test_fecha = datetime.now().isoformat()
     response = client.post(
         "/api/citas",
-        json={"paciente": "Paciente de Prueba", "fecha": test_fecha, "motivo": "Test Motivo"},
+        json={
+            "paciente": "Paciente de Prueba",
+            "fecha": test_fecha,
+            "motivo": "Test Motivo",
+        },
     )
     # Verificar el código de estado (201 Created)
     assert response.status_code == 201
-    
+
     # Verificar los datos devueltos
     data = response.json()
     assert data["paciente"] == "Paciente de Prueba"
     assert data["motivo"] == "Test Motivo"
     assert "id" in data
     assert data["id"] == 1
+
 
 def test_get_citas_con_datos():
     """
@@ -95,16 +106,17 @@ def test_get_citas_con_datos():
         "/api/citas",
         json={"paciente": "Paciente 1", "fecha": test_fecha, "motivo": "Test 1"},
     )
-    
+
     # 2. Obtener la lista de citas
     response = client.get("/api/citas")
     assert response.status_code == 200
     data = response.json()
-    
+
     # Verificar que los datos están en la lista
     assert len(data) == 1
     assert data[0]["paciente"] == "Paciente 1"
     assert data[0]["id"] == 1
+
 
 def test_get_cita_by_id_existente():
     """
@@ -116,12 +128,13 @@ def test_get_cita_by_id_existente():
         json={"paciente": "Paciente ID", "fecha": test_fecha, "motivo": "Test ID"},
     )
     cita_id = post_response.json()["id"]
-    
+
     get_response = client.get(f"/api/citas/{cita_id}")
     assert get_response.status_code == 200
     data = get_response.json()
     assert data["paciente"] == "Paciente ID"
     assert data["id"] == cita_id
+
 
 def test_get_cita_by_id_no_existente():
     """
@@ -131,13 +144,16 @@ def test_get_cita_by_id_no_existente():
     assert response.status_code == 404
     assert response.json() == {"detail": "Cita no encontrada"}
 
+
 # --- Test Unitario (Ejemplo) ---
 
 # (En este proyecto, la lógica está muy ligada a los endpoints,
 # pero si tuviéramos una función de utilidad, la probaríamos así)
 
+
 def mi_funcion_utilidad(a, b):
     return a + b
+
 
 def test_mi_funcion_utilidad():
     """

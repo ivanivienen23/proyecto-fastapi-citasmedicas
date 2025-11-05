@@ -20,11 +20,13 @@ Input (JSON): {"paciente": "string", "fecha": "YYYY-MM-DDTHH:MM:SS", "motivo": "
 
 Output (JSON): La cita recién creada con su ID.
 
+
 GET /api/citas
 
 Descripción: Obtiene una lista de todas las citas.
 
 Output (JSON): Una lista [ ] de objetos de citas.
+
 
 GET /api/citas/{cita_id}
 
@@ -32,11 +34,13 @@ Descripción: Obtiene una cita específica por su ID.
 
 Output (JSON): El objeto de la cita. Devuelve 404 si no se encuentra.
 
+
 DELETE /api/citas/{cita_id}
 
 Descripción: Borra una cita específica por su ID.
 
 Output (JSON): Mensaje de confirmación. Devuelve 404 si no se encuentra.
+
 
 --- 2. CÓMO EJECUTAR LA APLICACIÓN (LOCAL) ---
 
@@ -62,7 +66,7 @@ uvicorn app.main:app --reload
 
 ¡Listo! Abre tu navegador y ve a https://www.google.com/search?q=http://127.0.0.1:8000/docs
 Allí verás la documentación interactiva de la API, donde podrás
-probar todos los endpoints directamente.
+probar todos los endpoints directamente, desplegando el endpoint que quieras utilizar, y seleccionando la opción try it out.
 
 --- 3. CÓMO EJECUTAR LOS TESTS ---
 

@@ -1,4 +1,4 @@
-========================================================= PROYECTO: API DE GESTIÓN DE CITAS (FASTAPI)
+PROYECTO: API DE GESTIÓN DE CITAS (FASTAPI)
 
 Este documento explica la estructura, funcionamiento y despliegue
 de la API de gestión de citas, cubriendo todos los entregables
@@ -63,8 +63,7 @@ pip install -r requirements.txt
 Ejecuta el servidor de desarrollo Uvicorn:
 
 uvicorn app.main:app --reload
-
-¡Listo! Abre tu navegador y ve a https://www.google.com/search?q=http://127.0.0.1:8000/docs
+http://127.0.0.1:8000/docs
 Allí verás la documentación interactiva de la API, donde podrás
 probar todos los endpoints directamente, desplegando el endpoint que quieras utilizar, y seleccionando la opción try it out.
 
